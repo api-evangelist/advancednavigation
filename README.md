@@ -64,5 +64,21 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Advancednavigation is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://equityzen.com/company/advancednavigation
+Advanced Navigation is an Australian navigation and robotics manufacturer (Sydney, NSW) building
+inertial navigation systems, IMU/AHRS, GNSS compasses, acoustic/USBL subsea positioning and
+underwater robotics. Its devices speak the proprietary binary Advanced Navigation Packet Protocol
+(ANPP), documented in per-product reference manuals and implemented by first-party C SDKs, a Python
+SDK on PyPI and ROS 1 / ROS 2 drivers.
+
+Its one public web API is the **Kinematica API** — an HTTP/JSON interface to the Kinematica cloud
+GNSS/INS post-processing (PPK) service at `https://hq.advancednavigation.com.au/kinematica/api`. It is
+documented as a versioned 45-page PDF reference manual (API v1.2, document v1.6, 06/01/2026) rather
+than a machine-readable specification: no OpenAPI, AsyncAPI, GraphQL, MCP server or agent card was
+found on any host. The artifacts in this repository were read out of that manual and confirmed against
+live probes.
+
+- Website: https://www.advancednavigation.com/
+- Documentation: https://www.advancednavigation.com/documentation/
+- Kinematica API reference: https://www.advancednavigation.com/accessories/gnss-ins-post-processing/kinematica/api-reference-manual/
+- GitHub: https://github.com/advanced-navigation
+- Secondary-market listing this profile was seeded from: https://equityzen.com/company/advancednavigation

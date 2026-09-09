@@ -1,0 +1,74 @@
+generated: '2026-09-09'
+method: searched
+source: https://hq.advancednavigation.com.au/kinematica/home.jsp
+plan_count: 3
+currency: USD
+note: >-
+  Advanced Navigation publishes no pricing for its hardware (INS, IMU, acoustic and robotics products
+  are quote-only — every product page ends in "Get A Quote"). The one priced, self-serve product is
+  Kinematica, the cloud post-processing service, and its pricing table is published anonymously on the
+  Kinematica portal landing page. Currency symbol is "$" with no currency named on the page; recorded
+  as USD because Advanced Navigation quotes internationally in USD, and flagged here as an inference
+  rather than a published fact. THE COMMERCIALLY IMPORTANT LINE: only the pay-as-you-go tier includes
+  API access — the $200/month subscription is explicitly "Web interface only".
+plans:
+- name: Free Trial
+  price: 0
+  billing_period: one-time
+  included_quota: 15 minutes of post-processed data
+  overage: null
+  api_access: unstated
+  note: >-
+    "Free trial includes 15 minutes worth of post processed data." No credit card or key prefix / test
+    mode is documented — the trial is a credit balance on a real account, not a sandbox.
+- name: Subscription
+  price: 200
+  currency: USD
+  billing_period: month
+  alternate_price:
+    price: 2000
+    billing_period: year
+    note: "or $2,000 / year (save $400)"
+  included_quota: Unlimited data processing (fair usage policy applies)
+  overage: null
+  api_access: false
+  limits:
+  - "Web interface only — no API access on this tier"
+  - "Unlimited data processing* — * fair usage policy applies (the policy itself is not published)"
+  features:
+  - GPS, GLONASS, Galileo, BeiDou and SBAS support
+  - Automatic base station data download
+  - Advanced Integrity Monitoring
+  - Forward and reverse processing
+- name: Pay As You Go
+  price: 1
+  currency: USD
+  billing_period: per minute of data processed
+  included_quota: null
+  overage: "billed per minute of data processed; purchased per 60 minutes"
+  api_access: true
+  limits:
+  - "Purchased per 60 minutes"
+  - "Web interface and API access"
+  - "Contact us for volume discounts — volume pricing is not published"
+  features:
+  - GPS, GLONASS, Galileo, BeiDou and SBAS support
+  - Automatic base station data download
+  - Advanced Integrity Monitoring
+  - Forward and reverse processing
+  note: >-
+    Described on the page as "for automated processing and casual users" — this is the tier the
+    Kinematica API is sold under. The API reference manual confirms the metering model in a log
+    message: "Charging 40 minute(s) of credits to your account".
+hardware_pricing:
+  published: false
+  model: quote-only
+  evidence: https://www.advancednavigation.com/accessories/gnss-ins-post-processing/kinematica/
+  note: >-
+    https://www.advancednavigation.com/pricing/ returns 404 (probed 2026-09-09). Product pages carry
+    "Get A Quote" rather than a price.
+x-evidence:
+- url: https://hq.advancednavigation.com.au/kinematica/home.jsp
+  status: 200
+- url: https://www.advancednavigation.com/pricing/
+  status: 404

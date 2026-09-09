@@ -1,0 +1,64 @@
+generated: '2026-09-09'
+method: probed
+source: https://hq.advancednavigation.com.au/kinematica/api/alldatasets?v=1.2
+docs: https://www.advancednavigation.com/downloads/versioned/kinematica/kinematica_api_reference_manual-1.6.pdf
+limit_count: 1
+note: >-
+  Published in section 7 of the Kinematica API Reference Manual (added in document v1.6 / server
+  v1.5.22, 06/01/2026) AND observed live on an unauthenticated response on 2026-09-09 — the response
+  headers below were read off the wire, not only off the page.
+rate_limits:
+- name: Kinematica API global limit
+  scope: per-api-key AND per-client-ip (dual bucket)
+  limit: 6000
+  unit: requests
+  window: 1 minute
+  burst: null
+  refill: tokens refill every minute
+  applies_to: all /api endpoints
+  enforcement: >-
+    "Dual bucket: one per IP. One per API key. Request is denied if either bucket is empty."
+  exhaustion_status: 429
+  docs: https://www.advancednavigation.com/downloads/versioned/kinematica/kinematica_api_reference_manual-1.6.pdf
+headers:
+- name: X-RateLimit-Limit
+  meaning: total token limit for the policy (observed value 6000)
+  observed: true
+- name: X-RateLimit-Remaining
+  meaning: tokens remaining in the most restrictive bucket
+  observed: true
+- name: X-RateLimit-Remaining-IP
+  meaning: tokens remaining in the per-IP bucket
+  observed: true
+- name: X-RateLimit-Remaining-User
+  meaning: tokens remaining in the per-API-key bucket
+  observed: true
+- name: X-RateLimit-Reset
+  meaning: unix timestamp when the window resets
+  observed: true
+- name: Retry-After
+  meaning: seconds to wait before retrying; documented on the 429 response only
+  observed: false
+- name: Cache-Control
+  meaning: "no-store on a 429, so a rate-limited response is never cached"
+  observed: false
+exhaustion_body: |
+  {
+      "success": false,
+      "message": "Too many requests",
+      "retryAfter": 60
+  }
+x-evidence:
+  fetched: '2026-09-09'
+  url: https://hq.advancednavigation.com.au/kinematica/api/alldatasets?v=1.2&apiKey=invalid
+  http_status: 200
+  response_headers:
+    X-Ratelimit-Limit: '6000'
+    X-Ratelimit-Remaining: '5998'
+    X-Ratelimit-Remaining-Ip: '5998'
+    X-Ratelimit-Remaining-User: '5999'
+    X-Ratelimit-Reset: '1788990535'
+  note: >-
+    Rate-limit headers are returned on ordinary 2xx responses, not only on 429 — an agent can read its
+    remaining budget from every call. Both bucket counters are exposed separately, which is unusual
+    and useful: a client can tell whether it is the IP or the key that is running out.

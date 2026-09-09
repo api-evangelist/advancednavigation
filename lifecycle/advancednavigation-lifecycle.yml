@@ -1,0 +1,94 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  https://www.advancednavigation.com/downloads/versioned/kinematica/kinematica_api_reference_manual-1.6.pdf
+  (section 5, Versioning); https://www.advancednavigation.com/documentation/ (product End of Life
+  program)
+api_versioning:
+  scheme: request-parameter
+  parameter: v
+  current: '1.2'
+  format: major.minor
+  policy: >-
+    "Minor revisions will maintain backwards compatibility. Major revisions will not maintain
+    backwards compatibility. Users of the API will be given a time frame to port to the new API during
+    any major changes before the old API is deprecated."
+  docs: https://www.advancednavigation.com/accessories/gnss-ins-post-processing/kinematica/api-reference-manual/
+  note: >-
+    The policy states that a porting window exists but does not quantify it — no number of months, no
+    minimum notice period, and no published list of retired versions. API v1.2 has been current since
+    06/02/2018; v1.0 and v1.1 are named in the software-history table but no sunset date is given for
+    either.
+deprecation:
+  api:
+    policy_url: https://www.advancednavigation.com/accessories/gnss-ins-post-processing/kinematica/api-reference-manual/
+    sunset_header: false
+    deprecation_header: false
+    note: >-
+      RFC 8594 Sunset / Deprecation headers are not documented and were not observed on the live
+      response probed 2026-09-09. Deprecation notice is prose in the reference manual only.
+  products:
+    policy_url: https://www.advancednavigation.com/documentation/
+    stages: [NRND (not recommended for new design), LTB (last time buy), LTS (last time ship), End of Support]
+    note: >-
+      Advanced Navigation runs a genuine, dated four-stage hardware End of Life program and publishes
+      the milestone dates for each retiring product on the Documentation page. This is a real
+      deprecation posture — it is stronger than what the API itself publishes.
+    products_in_program:
+    - product: Orientus
+      nrnd: '2024-09-25'
+      last_time_buy: '2025-12-31'
+      last_time_ship: '2026-03-31'
+      end_of_support: '2026-12-31'
+    - product: Spatial
+      nrnd: '2024-09-25'
+      last_time_buy: '2025-12-31'
+      last_time_ship: '2026-03-31'
+      end_of_support: '2026-12-31'
+    - product: Spatial OEM
+      nrnd: '2024-09-25'
+      last_time_buy: '2025-12-31'
+      last_time_ship: '2026-03-31'
+      end_of_support: '2026-12-31'
+    - product: Spatial Dual
+      nrnd: '2025-03-01'
+      last_time_buy: '2025-12-31'
+      last_time_ship: '2026-12-31'
+      end_of_support: '2027-12-31'
+    - product: Spatial FOG
+      nrnd: '2025-12-01'
+      last_time_buy: '2026-07-13'
+      last_time_ship: '2027-07-13'
+      end_of_support: '2028-07-13'
+    - product: Spatial FOG Dual
+      nrnd: '2026-01-12'
+      last_time_buy: '2026-07-13'
+      last_time_ship: '2027-07-13'
+      end_of_support: '2028-07-13'
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No SLA or uptime commitment is published for the Kinematica service. The subscription tier's
+    "unlimited data processing" carries an unpublished "fair usage policy".
+status_page:
+  url: null
+  note: >-
+    No status page found. Probed 2026-09-09: status.advancednavigation.com does not resolve (DNS
+    NXDOMAIN); no status/uptime link appears on the website, the documentation page, the Kinematica
+    portal, or the Jira Service Management help centre. NO StatusPage pointer is emitted.
+support:
+  help_center: https://help.advancednavigation.com/s/
+  knowledge_base: https://support.advancednavigation.com/
+  note: >-
+    support.advancednavigation.com 301s to advancednavigation-jira.atlassian.net/helpcenter/MKB (Jira
+    Service Management). The AdNav Intelligence page describes it as an AI-powered knowledge base.
+deprecated_operations: []
+x-evidence:
+- url: https://status.advancednavigation.com/
+  status: 0
+  note: DNS does not resolve
+- url: https://www.advancednavigation.com/documentation/
+  status: 200
+- url: https://www.advancednavigation.com/downloads/versioned/kinematica/kinematica_api_reference_manual-1.6.pdf
+  status: 200

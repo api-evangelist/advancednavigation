@@ -1,0 +1,72 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  https://pypi.org/pypi/advanced-navigation/json; https://github.com/advanced-navigation;
+  https://www.advancednavigation.com/documentation/
+note: >-
+  Advanced Navigation ships client libraries for its device protocol (ANPP — Advanced Navigation
+  Packet Protocol), not for the Kinematica web API. The Kinematica API has no first-party client
+  library in any registry; it is called directly over HTTP. Registries probed with no first-party
+  result: npm, Maven Central, NuGet, RubyGems, Packagist, crates.io, pkg.go.dev.
+packages:
+- language: python
+  registry: pypi
+  name: advanced-navigation
+  url: https://pypi.org/project/advanced-navigation/
+  repository: https://github.com/advanced-navigation/python
+  install: pip install advanced-navigation
+  official: true
+  license: MIT
+  version: 0.2.2
+  published: '2026-08-25'
+  covers: ANPP device protocol (Boreas, Certus, Motus, GNSS Compass and related products)
+  note: >-
+    Published by "Advanced Navigation <ins-embedded-team@advancednavigation.com>"; project URLs point
+    at advancednavigation.com and github.com/advanced-navigation. 18 releases; version and date read
+    from pypi.org/pypi/advanced-navigation/json on 2026-09-09.
+- language: cpp
+  registry: github
+  name: ros2-driver
+  url: https://github.com/advanced-navigation/ros2-driver
+  install: git clone https://github.com/advanced-navigation/ros2-driver
+  official: true
+  version: null
+  published: '2026-06-05'
+  covers: ROS 2 driver for Advanced Navigation ANPP devices
+  note: >-
+    No tagged release and no ROS distro / registry publication found — version is null because there
+    is nothing published to read a version from. `published` is the last push date to the default
+    branch (GitHub API, 2026-09-09).
+- language: c
+  registry: github
+  name: ros1-driver
+  url: https://github.com/advanced-navigation/ros1-driver
+  install: git clone https://github.com/advanced-navigation/ros1-driver
+  official: true
+  version: null
+  published: '2020-11-16'
+  covers: ROS 1 driver for Advanced Navigation ANPP devices
+  note: >-
+    Last pushed 2020-11-16 — five years stale against a device protocol and SDK line still shipping
+    (C SDK v7.3, May 2026). No tags, no registry release. Recorded as an abandonment signal, not a
+    current SDK.
+- language: c
+  registry: cdn
+  name: Advanced Navigation C SDK (per-product)
+  url: https://www.advancednavigation.com/documentation/
+  install: >-
+    Download the per-product SDK zip from the Documentation page, e.g.
+    https://www.advancednavigation.com/downloads/versioned/certus/CertusSDK_v7.3.zip
+  official: true
+  version: '7.3'
+  published: '2026-05-28'
+  covers: >-
+    ANPP encode/decode C SDK, shipped once per product line — Boreas, Certus, Certus Evo, Certus Mini
+    A/D/N, Motus, GNSS Compass, Orientus, Spatial, Spatial Dual, Spatial FOG, Spatial FOG Dual (all
+    v7.3), plus SubsonusSDK_0 and AirDataUnitSDK (unversioned filenames).
+  note: >-
+    No package registry — distribution is a versioned zip on the provider's own CDN. Version 7.3 read
+    from the pinned filename (…/CertusSDK_v7.3.zip); `published` is the Last-Modified header returned
+    by that URL on 2026-09-09 (Thu, 28 May 2026 00:08:36 GMT). SubsonusSDK_0.zip and
+    AirDataUnitSDK.zip carry no version in the filename, so a consumer of those two cannot tell what
+    build they received.

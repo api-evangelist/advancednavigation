@@ -1,0 +1,112 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  https://www.advancednavigation.com/downloads/versioned/kinematica/kinematica_api_reference_manual-1.6.pdf;
+  https://www.advancednavigation.com/documentation/
+note: >-
+  Assessed against the Kinematica API, the only public web API Advanced Navigation ships. Every entry
+  is evidenced from the provider's own reference manual or from a live probe on 2026-09-09; a `false`
+  here means "checked and not present", not "not looked for". The provider publishes no certification
+  or compliance program, so NO Compliance pointer is emitted.
+standards:
+- id: oauth2
+  conforms: false
+  evidence: >-
+    Section 4 documents a single API key passed as a request parameter. No authorization or token
+    endpoint exists; /.well-known/oauth-authorization-server 404s on www and is unreachable on the API
+    host.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returned 404 on www.advancednavigation.com (2026-09-09).
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use a bespoke {"success":"false","message":"..."} envelope returned with HTTP 200, not
+    application/problem+json. See errors/advancednavigation-problem-types.yml.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returned 404 on www.advancednavigation.com (2026-09-09).
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: >-
+    Section 5 states a porting window in prose; no Sunset or Deprecation header is documented and none
+    was observed on the live response.
+- id: rate-limit-headers
+  conforms: partial
+  evidence: >-
+    X-RateLimit-Limit / -Remaining / -Remaining-IP / -Remaining-User / -Reset observed live on
+    https://hq.advancednavigation.com.au/kinematica/api/alldatasets (HTTP 200, 2026-09-09), plus
+    Retry-After documented on the 429. These are the de facto X-RateLimit-* headers, NOT the IETF
+    draft RateLimit/RateLimit-Policy fields.
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header or equivalent anywhere in the reference manual; the billable
+    /api/processdataset call has no replay protection. See conventions/advancednavigation-conventions.yml.
+- id: pagination
+  conforms: false
+  evidence: /api/alldatasets returns the full account list with no limit/offset/cursor parameter.
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI/Swagger document served. Probed 2026-09-09 on www.advancednavigation.com,
+    docs.advancednavigation.com, support.advancednavigation.com and hq.advancednavigation.com.au:
+    /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json, /api-docs, /redoc all missed
+    (404/403/302/connection-closed). The contract is a 45-page PDF.
+- id: json-api
+  conforms: false
+  evidence: Responses are ad-hoc JSON objects; no data/attributes/relationships envelope.
+- id: llms-txt
+  conforms: true
+  evidence: >-
+    https://www.advancednavigation.com/llms.txt returns HTTP 200 text/plain, 11,264 bytes, generated
+    by Yoast SEO v28.4. Saved verbatim to llms/advancednavigation-llms.txt. It indexes marketing,
+    news, glossary and case-study pages only — it does not mention the Kinematica API, the reference
+    manuals, the SDKs or the GitHub organisation, so an agent reading it learns nothing about the API
+    surface.
+domain_standards:
+- id: rinex
+  conforms: true
+  scope: data formats consumed and produced, not an API standard
+  evidence: >-
+    The Kinematica API accepts RINEX observation and navigation files by their standard extensions
+    (.o, .d, .o.Z, .d.Z for rover and base station; n, g, p for ephemeris) and can auto-select a base
+    station "using RINEX file" (section 6.2.3). RINEX is the international GNSS data interchange
+    standard, so a customer already holding RINEX data integrates without a bespoke converter.
+- id: gpx
+  conforms: true
+  scope: output format
+  evidence: 'Post-processed results are downloadable as PostProcessed.gpx.zip (section 6.5.3).'
+- id: kml
+  conforms: true
+  scope: output format
+  evidence: 'Post-processed results are downloadable as PostProcessed.kml.zip (section 6.5.3).'
+- id: anpp
+  conforms: true
+  scope: proprietary device protocol, not an open standard
+  evidence: >-
+    The Advanced Navigation Packet Protocol is the company's own binary protocol for its devices,
+    documented per product in the reference manuals and implemented by the first-party C, Python and
+    ROS SDKs. Recorded here for completeness and explicitly flagged as PROPRIETARY — it is a
+    vendor format, and a buyer who does not already speak it needs the vendor's SDK.
+- id: gnss-constellations
+  conforms: true
+  scope: signal support claim
+  evidence: >-
+    'GPS, GLONASS, Galileo, BeiDou and SBAS Support' published on both Kinematica pricing tiers
+    (https://hq.advancednavigation.com.au/kinematica/home.jsp, 2026-09-09).
+- id: nmea-0183
+  conforms: unknown
+  evidence: >-
+    NMEA 0183 output is common in this product class and Advanced Navigation devices are widely
+    described as supporting it, but it is documented inside per-product reference manual PDFs that
+    were not opened in this pass. Recorded as unknown rather than asserted.
+compliance_program:
+  published: false
+  certifications: []
+  evidence: >-
+    No trust centre, no SOC 2 / ISO 27001 / FedRAMP claim, and no compliance page found. Probed
+    2026-09-09: trust.advancednavigation.com does not resolve, https://www.advancednavigation.com/security/
+    returns 404. The company's public compliance-adjacent claim is export posture — its products are
+    marketed as ITAR-free (stated in the site meta description and llms.txt) — which is a trade-control
+    statement, not an information-security certification.

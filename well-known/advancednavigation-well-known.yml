@@ -1,0 +1,129 @@
+generated: '2026-09-09'
+method: probed
+source: direct HTTPS probes, 2026-09-09
+hit_count: 0
+note: >-
+  No /.well-known/ discovery document is served on any host this record knows. www.advancednavigation.com
+  is WordPress behind Cloudflare: it answers 404 with a WordPress 404 page for every /.well-known/ path,
+  and returns 403 (WAF) rather than 404 for some root paths (/openapi.json, /swagger.json, /api-docs,
+  /apis.yml) — those 403s are the edge turning the crawler away, not documents. The negative-control
+  path returned 404 on www, so the host is not path-echoing. hq.advancednavigation.com.au (the
+  Kinematica API host) serves only /kinematica/*; every other path closes the connection without a
+  response (curl 52 / HTTP-2 INTERNAL_ERROR), recorded as status 0. docs.advancednavigation.com 302s
+  every path to /secure/0/alert?type=PageNotFound. support.advancednavigation.com 301s everything to
+  advancednavigation-jira.atlassian.net. NO WellKnown and NO SecurityTxt pointer is emitted — this
+  file records an absence, not a surface.
+path_echo_control: passed
+hosts:
+- host: https://www.advancednavigation.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 403
+  - path: /.well-known/advancednavigation-negative-control-7f3ab91c.json
+    status: 404
+- host: https://hq.advancednavigation.com.au
+  documents:
+  - path: /.well-known/security.txt
+    status: 0
+  - path: /.well-known/openid-configuration
+    status: 0
+  - path: /.well-known/oauth-authorization-server
+    status: 0
+  - path: /.well-known/oauth-protected-resource
+    status: 0
+  - path: /.well-known/api-catalog
+    status: 0
+  - path: /.well-known/ai-plugin.json
+    status: 0
+  - path: /.well-known/aauth-resource.json
+    status: 0
+  - path: /.well-known/agent-card.json
+    status: 0
+  - path: /.well-known/agent.json
+    status: 0
+  - path: /.well-known/apis.json
+    status: 0
+  - path: /apis.json
+    status: 0
+  - path: /apis.yml
+    status: 0
+  - path: /.well-known/advancednavigation-negative-control-7f3ab91c.json
+    status: 0
+- host: https://docs.advancednavigation.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 302
+  - path: /.well-known/openid-configuration
+    status: 302
+  - path: /.well-known/oauth-authorization-server
+    status: 302
+  - path: /.well-known/oauth-protected-resource
+    status: 302
+  - path: /.well-known/api-catalog
+    status: 302
+  - path: /.well-known/ai-plugin.json
+    status: 302
+  - path: /.well-known/aauth-resource.json
+    status: 302
+  - path: /.well-known/agent-card.json
+    status: 302
+  - path: /.well-known/agent.json
+    status: 302
+  - path: /.well-known/apis.json
+    status: 302
+  - path: /apis.json
+    status: 302
+  - path: /apis.yml
+    status: 302
+  - path: /.well-known/advancednavigation-negative-control-7f3ab91c.json
+    status: 302
+- host: https://support.advancednavigation.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 301
+  - path: /.well-known/openid-configuration
+    status: 301
+  - path: /.well-known/oauth-authorization-server
+    status: 301
+  - path: /.well-known/oauth-protected-resource
+    status: 301
+  - path: /.well-known/api-catalog
+    status: 301
+  - path: /.well-known/ai-plugin.json
+    status: 301
+  - path: /.well-known/aauth-resource.json
+    status: 301
+  - path: /.well-known/agent-card.json
+    status: 301
+  - path: /.well-known/agent.json
+    status: 301
+  - path: /.well-known/apis.json
+    status: 301
+  - path: /apis.json
+    status: 301
+  - path: /apis.yml
+    status: 301
+  - path: /.well-known/advancednavigation-negative-control-7f3ab91c.json
+    status: 301

@@ -1,23 +1,132 @@
 aid: advancednavigation
-name: Advancednavigation
-description: 'Advancednavigation is a company surfaced via the API Evangelist harvest backlog (source:
-  secondary-market) and added to the network as a stub for full-pipeline profiling.'
+name: Advanced Navigation
+description: >-
+  Advanced Navigation is an Australian navigation and robotics manufacturer (Sydney, NSW) building
+  inertial navigation systems (INS), IMU/AHRS, GNSS compasses, acoustic/USBL subsea positioning and
+  underwater robotics for air, land, sea and space — the Boreas FOG and Certus MEMS GNSS/INS families,
+  Motus, GNSS Compass, Subsonus USBL, Subsonus Tag and the Hydrus micro-AUV, plus the Chimera laser
+  velocity sensor and Air Data Unit aiding accessories. Its devices speak the proprietary binary
+  Advanced Navigation Packet Protocol (ANPP), documented in per-product reference manuals and
+  implemented by first-party C SDKs, a Python SDK on PyPI and ROS 1 / ROS 2 drivers. Its one public
+  web API is the Kinematica API — an HTTP/JSON interface to the Kinematica cloud GNSS/INS
+  post-processing (PPK) service, documented as a versioned PDF reference manual rather than a
+  machine-readable specification.
+image: https://www.advancednavigation.com/wp-content/uploads/2024/08/adnav_logo_420x91-colour.webp
 url: https://raw.githubusercontent.com/api-evangelist/advancednavigation/refs/heads/main/apis.yml
-x-type: company
-x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-09'
 modified: '2026-09-09'
+position: Producing
 tags:
 - Company
-apis: []
+- Navigation
+- Inertial Navigation
+- GNSS
+- Positioning
+- Robotics
+- Defense
+- Subsea
+- Geospatial
+- Post Processing
+- Hardware
+apis:
+- aid: advancednavigation-kinematica
+  name: Kinematica API
+  description: >-
+    HTTP/JSON API for Advanced Navigation's Kinematica cloud GNSS/INS post-processing kinematic (PPK)
+    service. Eleven documented calls let a customer application create a data set, upload primary and
+    secondary rover files (.anpp, .o, .d, .o.Z, .d.Z), supply or auto-select base-station and ephemeris
+    files, edit the processing configuration, queue processing, poll status and logs, list files and
+    download post-processed results. Authenticated with a per-account API key passed as a request
+    parameter; replies are JSON. API version v1.2; the API tier is sold as pay-as-you-go processing
+    minutes.
+  humanURL: https://www.advancednavigation.com/accessories/gnss-ins-post-processing/kinematica/
+  image: https://www.advancednavigation.com/wp-content/uploads/2024/08/adnav_logo_420x91-colour.webp
+  baseURL: https://hq.advancednavigation.com.au/kinematica/api
+  tags:
+  - GNSS
+  - Post Processing
+  - Positioning
+  - Geospatial
+  properties:
+  - type: APIReference
+    url: https://www.advancednavigation.com/accessories/gnss-ins-post-processing/kinematica/api-reference-manual/
+  - type: Documentation
+    url: https://www.advancednavigation.com/downloads/versioned/kinematica/kinematica_api_reference_manual-1.6.pdf
+  - type: SignUp
+    url: https://hq.advancednavigation.com.au/kinematica/home.jsp
+  - type: Authentication
+    url: authentication/advancednavigation-authentication.yml
+  - type: RateLimits
+    url: rate-limits/advancednavigation-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/advancednavigation-problem-types.yml
+  - type: Conventions
+    url: conventions/advancednavigation-conventions.yml
+  - type: DataModel
+    url: data-model/advancednavigation-data-model.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/advancednavigation-domain-security.yml
 - type: Website
-  url: https://equityzen.com/company/advancednavigation
+  url: https://www.advancednavigation.com/
+- type: DeveloperPortal
+  url: https://www.advancednavigation.com/documentation/
+- type: Documentation
+  url: https://www.advancednavigation.com/documentation/
+- type: APIReference
+  url: https://www.advancednavigation.com/accessories/gnss-ins-post-processing/kinematica/api-reference-manual/
+- type: Support
+  url: https://help.advancednavigation.com/s/
+- type: HelpCenter
+  url: https://support.advancednavigation.com/
+- type: Blog
+  url: https://www.advancednavigation.com/news/
+- type: GitHubOrganization
+  url: https://github.com/advanced-navigation
+- type: TermsOfService
+  url: https://www.advancednavigation.com/terms/
+- type: PrivacyPolicy
+  url: https://www.advancednavigation.com/privacy-policy/
+- type: Pricing
+  url: https://hq.advancednavigation.com.au/kinematica/home.jsp
+- type: SignUp
+  url: https://hq.advancednavigation.com.au/kinematica/home.jsp
+- type: Packages
+  url: packages/advancednavigation-packages.yml
+- type: SDKs
+  url: packages/advancednavigation-packages.yml
+- type: Authentication
+  url: authentication/advancednavigation-authentication.yml
+- type: RateLimits
+  url: rate-limits/advancednavigation-rate-limits.yml
+- type: Plans
+  url: plans/advancednavigation-plans-pricing.yml
+- type: ErrorCatalog
+  url: errors/advancednavigation-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/advancednavigation-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/advancednavigation-lifecycle.yml
+- type: Conventions
+  url: conventions/advancednavigation-conventions.yml
+- type: ChangeLog
+  url: changelog/advancednavigation-changelog.yml
+- type: DataModel
+  url: data-model/advancednavigation-data-model.yml
+- type: Conformance
+  url: conformance/advancednavigation-conformance.yml
+- type: LLMsTxt
+  url: llms/advancednavigation-llms.txt
+
+x-enrichment:
+  date: '2026-09-09'
+  status: enriched
+  harvest_source: harvest:secondary-market
+  artifacts_added: 14
+  pass: local-v3

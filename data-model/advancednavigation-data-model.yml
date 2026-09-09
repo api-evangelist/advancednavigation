@@ -1,0 +1,130 @@
+generated: '2026-09-09'
+method: derived
+source: >-
+  https://www.advancednavigation.com/downloads/versioned/kinematica/kinematica_api_reference_manual-1.6.pdf
+api: Kinematica API v1.2
+note: >-
+  Derived from the request parameters and JSON response bodies published in the Kinematica API
+  Reference Manual (document v1.6). There is no OpenAPI and no components/schemas to read, so every
+  field below was taken from a documented example response or a documented parameter; nothing is
+  inferred beyond what the manual shows.
+entities:
+- name: DataSet
+  description: The unit of work. Holds uploaded files, a processing configuration, a status and results.
+  identifier: id (integer, server-assigned)
+  natural_key: name (string, unique per account, used by /api/getdatasetid)
+  fields:
+  - name: id
+    type: integer
+    note: returned as an integer by newdataset and as a string by datasetfiles
+  - name: name
+    type: string
+    constraint: alphanumeric characters, spaces, hyphens and underscores only; unique per account
+  - name: primaryFiles
+    type: array of string
+  - name: secondaryFiles
+    type: array of string
+  - name: baseStationSource
+    type: integer
+    enum: ['0 none', '1 automatic', '2 manual', '3 none - precise point positioning']
+  - name: ephemerisSource
+    type: integer
+    enum: ['1 automatic', '2 supplement']
+  - name: sendEmail
+    type: string
+    enum: ['true', 'false']
+  operations: [newdataset, alldatasets, getdatasetid, deletedataset]
+- name: Configuration
+  description: >-
+    The processing configuration attached to a data set. Must be set via /api/editconfiguration before
+    /api/processdataset will run; otherwise the API answers "Configuration Not Initialised".
+  identifier: none (embedded in the data set, addressed by the data set id)
+  fields:
+  - name: baseStationAntenna
+    type: string
+    source: /api/antennaoptions
+  - name: roverAntenna
+    type: string
+    source: /api/antennaoptions
+  - name: deviceId
+    type: string
+  - {name: gnssOffsetSource, type: string}
+  - name: gnssOffset
+    type: string
+    note: manual GNSS antenna offset values
+  - {name: odometerOffsetSource, type: string}
+  - {name: dualAntennaOffsetSource, type: string}
+  - {name: dualAntennaOffsetType, type: string}
+  - {name: dualAntennaAutomaticOffset, type: string}
+  - {name: dualAntennaManualOffset, type: string}
+  operations: [editconfiguration]
+- name: File
+  description: A file belonging to a data set, either uploaded by the user or fetched by the server.
+  identifier: name (filename, unique within the data set)
+  fields:
+  - name: name
+    type: string
+  - name: category
+    type: string
+    enum: [primary, secondary, basestation, ephemeris, postprocessed]
+  - name: type
+    type: string
+    note: 'observed values: anpp, csv, gpx, kml, n, g, p'
+  - name: size
+    type: integer
+    note: bytes
+  groupings: [userFiles, automaticFiles]
+  operations: [datasetfiles, downloadfile]
+- name: Status
+  description: Processing state of a data set.
+  fields:
+  - name: status
+    type: string
+    note: 'observed example value: Initialising'
+  - name: currentProgress
+    type: integer
+  - name: totalProgress
+    type: integer
+  - name: processing
+    type: boolean
+  operations: [datasetstatus]
+- name: Log
+  description: >-
+    Processing log lines for a data set. The manual's examples show operational and BILLING lines
+    ("Charging 40 minute(s) of credits to your account", "ANPP file is approximately 40 minute(s)",
+    "GPS Files: brdc3550.16n.Z", log start/end times), so the log stream is where an integrator learns
+    what a job cost.
+  operations: [datasetlogs]
+- name: AntennaOption
+  description: >-
+    A selectable antenna profile, returned as a flat array of strings (e.g. "Automatically select
+    using RINEX file", "3S-02-TSADM     NONE"). Not an addressable resource — there is no id.
+  operations: [antennaoptions]
+- name: Account
+  description: >-
+    Implied, never addressable. Owns the API key, the data sets and the processing-minute credit
+    balance. No account, usage or credit-balance endpoint is published, so a client cannot read its
+    remaining balance over the API — only the per-job charge that appears in the log stream after the
+    fact.
+  operations: []
+relationships:
+- {from: DataSet, to: File, kind: has_many, via: userFiles/automaticFiles}
+- {from: DataSet, to: Configuration, kind: has_one, via: id}
+- {from: DataSet, to: Status, kind: has_one, via: id}
+- {from: DataSet, to: Log, kind: has_many, via: id}
+- {from: File, to: DataSet, kind: belongs_to, via: id}
+- {from: Configuration, to: AntennaOption, kind: has_one, via: baseStationAntenna}
+- {from: Configuration, to: AntennaOption, kind: has_one, via: roverAntenna}
+- {from: Account, to: DataSet, kind: has_many, via: apiKey}
+operations_index:
+- {operation: newdataset, method: POST, content_type: multipart/form-data, path: /api/newdataset, entity: DataSet, action: create}
+- {operation: antennaoptions, method: GET, path: /api/antennaoptions, entity: AntennaOption, action: list}
+- {operation: editconfiguration, method: POST, content_type: application/x-www-form-urlencoded, path: /api/editconfiguration, entity: Configuration, action: update}
+- {operation: processdataset, method: POST, content_type: application/x-www-form-urlencoded, path: /api/processdataset, entity: DataSet, action: 'process (billable)'}
+- {operation: datasetfiles, method: GET, path: /api/datasetfiles, entity: File, action: list}
+- {operation: datasetstatus, method: GET, path: /api/datasetstatus, entity: Status, action: read}
+- {operation: datasetlogs, method: GET, path: /api/datasetlogs, entity: Log, action: list}
+- {operation: downloadfile, method: GET, path: /api/downloadfile, entity: File, action: download}
+- {operation: alldatasets, method: GET, path: /api/alldatasets, entity: DataSet, action: list}
+- {operation: deletedataset, method: POST, content_type: application/x-www-form-urlencoded, path: /api/deletedataset, entity: DataSet, action: delete}
+- {operation: getdatasetid, method: GET, path: /api/getdatasetid, entity: DataSet, action: 'lookup by name'}

@@ -1,0 +1,69 @@
+generated: '2026-09-09'
+method: derived
+status: candidate
+source: >-
+  https://www.advancednavigation.com/downloads/versioned/kinematica/kinematica_api_reference_manual-1.6.pdf
+note: >-
+  Advanced Navigation ships NO MCP server. Searched 2026-09-09: no MCP mention on the website, the
+  documentation page, the AdNav Intelligence pages, the Jira Service Management knowledge base, the
+  llms.txt, or the five public repositories in the github.com/advanced-navigation organisation; no
+  @advanced-navigation or advanced-navigation MCP package on npm or PyPI. The tool list below is a
+  CANDIDATE derived from the eleven calls documented in the Kinematica API Reference Manual — it is a
+  design sketch of what a server could expose, not something anyone can call. NO type: MCPServer
+  pointer is emitted in apis.yml, because emitting one would credit the provider with an agent surface
+  it does not serve.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: derived
+server:
+  name: advancednavigation-kinematica
+  transport: null
+  url: null
+tools:
+- name: list_datasets
+  description: List every Kinematica data set on the authenticated account.
+  source_operation: GET /api/alldatasets
+- name: get_dataset_id
+  description: Resolve a data set name to its numeric id.
+  source_operation: GET /api/getdatasetid
+- name: create_dataset
+  description: >-
+    Create a data set and upload primary (and optional secondary) rover files, base-station files and
+    ephemeris files. Multipart upload — a poor fit for an MCP tool call and the main reason this
+    candidate is a sketch rather than a plan.
+  source_operation: POST /api/newdataset
+- name: list_antenna_options
+  description: List the antenna profiles Kinematica can be configured with.
+  source_operation: GET /api/antennaoptions
+- name: edit_dataset_configuration
+  description: Set antenna, device and lever-arm offset configuration on a data set before processing.
+  source_operation: POST /api/editconfiguration
+- name: process_dataset
+  description: >-
+    Queue a data set for post-processing. BILLABLE and IRREVERSIBLE — charged per minute of data
+    processed, with no cancel path and no idempotency key. Any real server must gate this behind
+    human confirmation.
+  source_operation: POST /api/processdataset
+  consequence: financial
+  human_in_the_loop: recommended
+- name: get_dataset_status
+  description: Read processing status and progress for a data set.
+  source_operation: GET /api/datasetstatus
+- name: get_dataset_logs
+  description: Read the processing log for a data set, including the credit charge lines.
+  source_operation: GET /api/datasetlogs
+- name: list_dataset_files
+  description: List the files in a data set, by category and type.
+  source_operation: GET /api/datasetfiles
+- name: download_file
+  description: Download one file (post-processed CSV/GPX/KML, or a source file) from a data set.
+  source_operation: GET /api/downloadfile
+- name: delete_dataset
+  description: Delete a data set. Destructive, with no documented restore path.
+  source_operation: POST /api/deletedataset
+  consequence: destructive
+  human_in_the_loop: recommended

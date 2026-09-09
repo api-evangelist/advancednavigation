@@ -1,0 +1,99 @@
+generated: '2026-09-09'
+method: searched
+source: https://www.advancednavigation.com/downloads/versioned/kinematica/kinematica_api_reference_manual-1.6.pdf
+format: custom
+envelope:
+  shape: '{"success": "false", "message": "<human readable string>"}'
+  transport_status: >-
+    HTTP 200 for every documented application error except rate limiting. The API signals failure in
+    the JSON body via success:"false", not with a 4xx status. HTTP 429 is the single exception.
+  note: >-
+    NOT RFC 9457. There is no "type" URI, no "title"/"detail"/"instance", no application/problem+json
+    media type, and no machine-readable error code — only an English `message` string that a client
+    must string-match. Confirmed live 2026-09-09: an unauthenticated GET to /api/alldatasets returns
+    HTTP 200 with {"success":"false","message":"Invalid API key"}.
+  case_inconsistency: >-
+    The manual publishes the same error with two different spellings — "Invalid API Key" (sections
+    6.1.4.1, 6.2.4.1) and "Invalid API key" (sections 6.5, 6.6, 6.8, 6.9, 6.10). The live response
+    observed on 2026-09-09 used the lowercase-k form. A client string-matching this message must
+    handle both.
+problems:
+- message: Invalid API key
+  http_status: 200
+  meaning: The apiKey parameter is missing, malformed, or not a valid account key.
+  remediation: Retrieve the account's API key from the Kinematica account page and resend.
+  operations: [newdataset, antennaoptions, editconfiguration, processdataset, datasetfiles, datasetstatus, datasetlogs, downloadfile, alldatasets, deletedataset, getdatasetid]
+- message: Invalid API Version
+  http_status: 200
+  meaning: The v parameter is missing or not a recognised API version.
+  remediation: Send v=1.2 (the current API version as of document v1.6).
+  operations: [newdataset, antennaoptions, editconfiguration, processdataset, datasetfiles, datasetstatus, datasetlogs, downloadfile, alldatasets]
+- message: Incompatible API Version
+  http_status: 200
+  meaning: >-
+    The requested API version is incompatible with the version running on the server. Minor revisions
+    keep backwards compatibility; major revisions do not.
+  remediation: Port the client to the current major version.
+  operations: [all]
+- message: Unauthorised
+  http_status: 200
+  meaning: The data set exists but is not owned by the authenticated account.
+  remediation: Use a data set id returned by /api/alldatasets for this account.
+  operations: [editconfiguration, processdataset, datasetfiles, datasetstatus, datasetlogs, downloadfile, deletedataset]
+- message: Invalid Data Set
+  http_status: 200
+  meaning: The id parameter does not name a data set.
+  remediation: Call /api/alldatasets or /api/getdatasetid to obtain a valid id.
+  operations: [editconfiguration, processdataset, datasetfiles, datasetstatus, datasetlogs, downloadfile, deletedataset]
+- message: Cannot find data set
+  http_status: 200
+  meaning: The data set name supplied to /api/getdatasetid does not match any data set on the account.
+  remediation: Check the name, or list data sets with /api/alldatasets.
+  operations: [getdatasetid]
+- message: Data Set Busy
+  http_status: 200
+  meaning: >-
+    The data set is currently being processed. Configuration edits, file downloads and deletion are
+    refused while processing is in flight.
+  remediation: Poll /api/datasetstatus until status.processing is false, then retry.
+  operations: [editconfiguration, processdataset, datasetfiles, downloadfile, deletedataset]
+- message: Configuration Not Initialised
+  http_status: 200
+  meaning: >-
+    Processing was requested on a data set whose configuration has not been set. The manual states
+    /api/editconfiguration "must be called on a new data set before processing".
+  remediation: Call /api/editconfiguration for the data set, then /api/processdataset.
+  operations: [processdataset, deletedataset]
+- message: Invalid Fields
+  http_status: 200
+  meaning: One or more submitted form fields failed validation. The offending field is not named.
+  remediation: Re-check every parameter against the reference manual; the response does not localise the fault.
+  operations: [newdataset, editconfiguration]
+- message: Missing Device Id
+  http_status: 200
+  meaning: The deviceId parameter is required for the chosen configuration and was not supplied.
+  remediation: Supply deviceId on /api/editconfiguration.
+  operations: [editconfiguration]
+- message: Invalid Base Station Source
+  http_status: 200
+  meaning: baseStationSource is not one of 0 (none), 1 (automatic), 2 (manual), 3 (none - PPP).
+  remediation: Send a documented enum value.
+  operations: [newdataset]
+- message: Invalid Send Email
+  http_status: 200
+  meaning: sendEmail is not the string "true" or "false".
+  remediation: Send "true" or "false".
+  operations: [newdataset]
+- message: Invalid File
+  http_status: 200
+  meaning: The requested filename is not a file in the data set.
+  remediation: Read filenames from /api/datasetfiles before calling /api/downloadfile.
+  operations: [downloadfile]
+- message: Too many requests
+  http_status: 429
+  meaning: >-
+    The per-IP or per-API-key rate-limit bucket is empty (6000 requests/minute each). The only
+    documented error that uses an HTTP status rather than the success:"false" envelope.
+  remediation: Wait retryAfter seconds (also returned in the Retry-After header) and retry.
+  envelope: '{"success": false, "message": "Too many requests", "retryAfter": 60}'
+  operations: [all]

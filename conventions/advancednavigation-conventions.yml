@@ -1,0 +1,146 @@
+generated: '2026-09-09'
+method: searched
+source: https://www.advancednavigation.com/downloads/versioned/kinematica/kinematica_api_reference_manual-1.6.pdf
+docs: https://www.advancednavigation.com/accessories/gnss-ins-post-processing/kinematica/api-reference-manual/
+api: Kinematica API v1.2
+note: >-
+  Cross-cutting request/response semantics for the Kinematica API, read out of the provider's own
+  reference manual (document v1.6, 06/01/2026) and confirmed against live unauthenticated responses on
+  2026-09-09. Advanced Navigation publishes no OpenAPI, so nothing here is derived from a spec.
+authentication:
+  style: api-key-in-query
+  parameter: apiKey
+  detail: authentication/advancednavigation-authentication.yml
+transport:
+  base_url: https://hq.advancednavigation.com.au/kinematica/api
+  legacy_hosts:
+  - host: https://www.advancednavigation.com.au/kinematica/api
+    note: >-
+      The manual gives this older host for two calls added later — deletedataset (6.10.1) and
+      getdatasetid (6.11.1) — while every other call is documented on hq.advancednavigation.com.au.
+      Server changelog entry 1.1.3 (06/02/2018) says the URL changed to hq. and "old www URL will
+      redirect". Probed 2026-09-09: https://www.advancednavigation.com.au/ returns 301 to
+      https://www.advancednavigation.com/ (the marketing site), so the redirect no longer lands on the
+      API. Treat hq.advancednavigation.com.au as the base for all eleven calls; the two www references
+      are stale documentation.
+  request_shapes:
+  - GET with query parameters — status, listing and file retrieval calls
+  - POST multipart/form-data — file upload (newdataset)
+  - POST application/x-www-form-urlencoded — configuration and action calls
+  response_media_type: application/json;charset=UTF-8
+  binary_responses: >-
+    /api/downloadfile returns application/octet-stream with
+    Content-Disposition: attachment; filename={FILE_NAME} (spelled "attatchment" in the manual).
+versioning:
+  style: mandatory request parameter
+  parameter: v
+  current: '1.2'
+  scheme: major.minor
+  policy: >-
+    "Minor revisions will maintain backwards compatibility. Major revisions will not maintain
+    backwards compatibility. Users of the API will be given a time frame to port to the new API during
+    any major changes before the old API is deprecated."
+  incompatible_response: '{"success" : "false", "message" : "Incompatible API Version"}'
+  note: >-
+    Version is not in the path or a header — it is a required query/form parameter on every call, so
+    an unversioned request is an error rather than a default.
+error_envelope:
+  shape: '{"success": "true"|"false", "message": "<string>"}'
+  transport_status: HTTP 200 for application errors; 429 for rate limiting
+  format: custom (not RFC 9457)
+  detail: errors/advancednavigation-problem-types.yml
+  note: >-
+    success is a JSON STRING ("true"/"false") on every documented call except the 429 body, where it is
+    a JSON boolean (false). A strict client must handle both types on the same field.
+rate_limit_signaling:
+  headers: [X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Remaining-IP, X-RateLimit-Remaining-User, X-RateLimit-Reset, Retry-After]
+  exhaustion_status: 429
+  observed_on_2xx: true
+  detail: rate-limits/advancednavigation-rate-limits.yml
+pagination:
+  style: none
+  detail: >-
+    /api/alldatasets returns the account's complete data-set list in one response. No limit, offset,
+    page or cursor parameter is documented, and no next/total field is returned. For a long-lived
+    account this is an unbounded response.
+field_expansion:
+  supported: false
+sparse_fields:
+  supported: false
+metadata:
+  supported: false
+  note: >-
+    A data set carries a user-supplied `name` (which must be unique per account and is also the lookup
+    key for /api/getdatasetid) and a server-assigned integer `id`. There is no free-form metadata or
+    tag facility.
+request_tracing:
+  request_id_header: none
+  note: No correlation / request-id header is documented, and none was returned on the live probe.
+idempotency:
+  supported: false
+  coverage: none
+  mechanism: null
+  header: null
+  scope: []
+  detail: >-
+    No replay-protection contract exists. There is no Idempotency-Key header or equivalent parameter
+    anywhere in the reference manual. The mutating surface is /api/newdataset (POST multipart),
+    /api/editconfiguration (POST form), /api/processdataset (POST form) and /api/deletedataset (POST
+    form). Two partial, incidental safeguards exist and are NOT idempotency: (1) data-set names must be
+    unique per account, so a retried newdataset with an explicit name will collide rather than
+    duplicate — but a newdataset sent WITHOUT a name is server-named and a retry creates a second data
+    set holding a second copy of the uploaded file; (2) a data set that is already processing rejects
+    further edits with "Data Set Busy". Because processing is billed per minute, a retried
+    processdataset on a completed data set is a chargeable duplicate with no documented protection.
+reversibility:
+  grade: none
+  detail: >-
+    No reversal operation and no window are published for any write on this API. The four writes and
+    what can be undone:
+  writes:
+  - operation: newdataset
+    reversal: deletedataset
+    reversal_kind: delete, not undo
+    window: null
+    note: >-
+      /api/deletedataset removes a data set, which is the closest thing to undoing a create — but the
+      manual states no retention or restore window, and there is no restore/undelete call. Deletion is
+      refused while the data set is processing ("Data Set Busy").
+  - operation: editconfiguration
+    reversal: null
+    window: null
+    note: >-
+      Configuration is overwritten in place. No prior-version retrieval, no revert. A client that
+      wants to roll back must re-send the previous values it kept itself.
+  - operation: processdataset
+    reversal: null
+    window: null
+    note: >-
+      No cancel, abort or stop call exists. Once processing starts the data set is locked ("Data Set
+      Busy") until it completes, and processing is the billable event — the manual's own log output
+      reads "Charging 40 minute(s) of credits to your account". An agent that fires this cannot take
+      it back and cannot stop the charge.
+  - operation: deletedataset
+    reversal: null
+    window: null
+    note: No undelete or trash/restore path is documented.
+  gap: >-
+    The single most consequential gap for an autonomous caller: the only billable, irreversible action
+    (processdataset) has neither an idempotency key nor a cancel path nor a documented refund window.
+dry_run_mode:
+  supported: false
+  note: >-
+    No preview, validate-only or estimate call. A caller cannot ask what a data set would cost to
+    process before processing it; the manual shows the minute count only in the post-hoc log stream
+    ("ANPP file is approximately 40 minute(s)" appears in /api/datasetlogs output).
+notifications:
+  webhooks: false
+  email: >-
+    /api/newdataset accepts sendEmail ("true"/"false") to email the account when processing completes.
+    Email is the only completion notification; otherwise a client polls /api/datasetstatus.
+cross_links:
+  errors: errors/advancednavigation-problem-types.yml
+  lifecycle: lifecycle/advancednavigation-lifecycle.yml
+  authentication: authentication/advancednavigation-authentication.yml
+  rate_limits: rate-limits/advancednavigation-rate-limits.yml
+  data_model: data-model/advancednavigation-data-model.yml

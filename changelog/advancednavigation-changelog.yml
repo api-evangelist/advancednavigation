@@ -1,0 +1,81 @@
+generated: '2026-09-09'
+method: searched
+source: https://www.advancednavigation.com/downloads/versioned/kinematica/kinematica_api_reference_manual-1.6.pdf
+api: Kinematica API
+scheme: major.minor
+current_version: '1.2'
+current_server_version: 1.5.22
+note: >-
+  Advanced Navigation publishes no changelog page. The Kinematica API's change history is published as
+  two dated tables inside the API reference manual itself — section 1 "Document History" and section 2
+  "API Software History", the latter tracking the server software version against the API version it
+  serves. Recorded here verbatim from document v1.6 (06/01/2026). Device firmware changelogs are
+  likewise carried inside each product's reference manual PDF rather than on a page ("The change log
+  can be found in the Boreas reference manual").
+entries:
+- version: '1.2'
+  server_version: 1.5.22
+  date: '2026-01-06'
+  breaking: false
+  additions:
+  - All API endpoints enforce rate limiting (6000 req/min per API key and per client IP)
+  highlights: >-
+    First rate-limiting policy on the API, plus the 429 response contract and X-RateLimit-* headers.
+    Documented in the new section 7.
+- version: '1.2'
+  server_version: 1.5.0
+  date: '2021-11-24'
+  breaking: false
+  additions:
+  - '"None - Precise point positioning" added as a base station source option (baseStationSource=3)'
+- version: '1.2'
+  server_version: 1.3.6
+  date: '2019-09-12'
+  breaking: false
+  additions:
+  - Delete Data Set functionality (/api/deletedataset); API version number unchanged
+- version: '1.2'
+  server_version: 1.1.3
+  date: '2018-02-06'
+  breaking: false
+  additions:
+  - 'URL changed to https://hq.advancednavigation.com.au/kinematica (old www URL will redirect)'
+- version: '1.1'
+  server_version: 1.0.14
+  date: '2017-06-27'
+  breaking: true
+  additions:
+  - Version scheme changed to major.minor
+  - 'New Data Set: ANPP file replaced by Primary Rover Files; secondary rover files supported'
+  - 'Rover files supported: .anpp, .o, .d, .o.Z, .d.Z'
+  - 'sendEmail changed from an integer string to a boolean string'
+  - 'Data Set Files: category field added (primary, secondary, basestation, ephemeris, postprocessed)'
+  - 'All Data Sets: ANPP file field renamed to primary file; secondary file and ephemeris source fields added'
+- version: '1.0'
+  server_version: 1.0.10
+  date: '2017-01-23'
+  breaking: false
+  additions:
+  - Initial release
+document_history:
+- document_version: '1.6'
+  date: '2026-01-06'
+  changes: Added rate limiting section; updated API calls with a rate limiting response; updated API software changelog
+- document_version: '1.5'
+  date: '2021-11-24'
+  changes: Updated sections 3 and 4 to reflect API v1.2; added "None - Precise point positioning" base station source
+- document_version: '1.4'
+  date: '2020-08-17'
+  changes: Added section 6.11 Get Data Set Id
+- document_version: '1.3'
+  date: '2019-09-12'
+  changes: Added section 6.10 Delete Data Set
+- document_version: '1.2'
+  date: '2018-02-06'
+  changes: Corrections to 6.1.2.4 and 6.1.2.7; URL updated throughout; updated for API v1.2
+- document_version: '1.1'
+  date: '2017-05-29'
+  changes: Updated for API v1.1
+- document_version: '1.0'
+  date: '2017-01-23'
+  changes: Initial release
