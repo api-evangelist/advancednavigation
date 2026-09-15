@@ -1,16 +1,14 @@
 aid: advancednavigation
 name: Advanced Navigation
-description: >-
-  Advanced Navigation is an Australian navigation and robotics manufacturer (Sydney, NSW) building
-  inertial navigation systems (INS), IMU/AHRS, GNSS compasses, acoustic/USBL subsea positioning and
-  underwater robotics for air, land, sea and space — the Boreas FOG and Certus MEMS GNSS/INS families,
-  Motus, GNSS Compass, Subsonus USBL, Subsonus Tag and the Hydrus micro-AUV, plus the Chimera laser
-  velocity sensor and Air Data Unit aiding accessories. Its devices speak the proprietary binary
-  Advanced Navigation Packet Protocol (ANPP), documented in per-product reference manuals and
-  implemented by first-party C SDKs, a Python SDK on PyPI and ROS 1 / ROS 2 drivers. Its one public
-  web API is the Kinematica API — an HTTP/JSON interface to the Kinematica cloud GNSS/INS
-  post-processing (PPK) service, documented as a versioned PDF reference manual rather than a
-  machine-readable specification.
+description: Advanced Navigation is an Australian navigation and robotics manufacturer (Sydney, NSW) building
+  inertial navigation systems (INS), IMU/AHRS, GNSS compasses, acoustic/USBL subsea positioning and underwater
+  robotics for air, land, sea and space — the Boreas FOG and Certus MEMS GNSS/INS families, Motus, GNSS
+  Compass, Subsonus USBL, Subsonus Tag and the Hydrus micro-AUV, plus the Chimera laser velocity sensor
+  and Air Data Unit aiding accessories. Its devices speak the proprietary binary Advanced Navigation Packet
+  Protocol (ANPP), documented in per-product reference manuals and implemented by first-party C SDKs,
+  a Python SDK on PyPI and ROS 1 / ROS 2 drivers. Its one public web API is the Kinematica API — an HTTP/JSON
+  interface to the Kinematica cloud GNSS/INS post-processing (PPK) service, documented as a versioned
+  PDF reference manual rather than a machine-readable specification.
 image: https://www.advancednavigation.com/wp-content/uploads/2024/08/adnav_logo_420x91-colour.webp
 url: https://raw.githubusercontent.com/api-evangelist/advancednavigation/refs/heads/main/apis.yml
 specificationVersion: '0.20'
@@ -27,23 +25,38 @@ tags:
 - Defense
 - Subsea
 - Geospatial
+- Post-Processing
+- Hardware
+tags_raw:
+- Company
+- Navigation
+- Inertial Navigation
+- GNSS
+- Positioning
+- Robotics
+- Defense
+- Subsea
+- Geospatial
 - Post Processing
 - Hardware
 apis:
-- aid: advancednavigation-kinematica
+- aid: advancednavigation:advancednavigation-kinematica
   name: Kinematica API
-  description: >-
-    HTTP/JSON API for Advanced Navigation's Kinematica cloud GNSS/INS post-processing kinematic (PPK)
-    service. Eleven documented calls let a customer application create a data set, upload primary and
-    secondary rover files (.anpp, .o, .d, .o.Z, .d.Z), supply or auto-select base-station and ephemeris
-    files, edit the processing configuration, queue processing, poll status and logs, list files and
-    download post-processed results. Authenticated with a per-account API key passed as a request
-    parameter; replies are JSON. API version v1.2; the API tier is sold as pay-as-you-go processing
-    minutes.
+  description: HTTP/JSON API for Advanced Navigation's Kinematica cloud GNSS/INS post-processing kinematic
+    (PPK) service. Eleven documented calls let a customer application create a data set, upload primary
+    and secondary rover files (.anpp, .o, .d, .o.Z, .d.Z), supply or auto-select base-station and ephemeris
+    files, edit the processing configuration, queue processing, poll status and logs, list files and download
+    post-processed results. Authenticated with a per-account API key passed as a request parameter; replies
+    are JSON. API version v1.2; the API tier is sold as pay-as-you-go processing minutes.
   humanURL: https://www.advancednavigation.com/accessories/gnss-ins-post-processing/kinematica/
   image: https://www.advancednavigation.com/wp-content/uploads/2024/08/adnav_logo_420x91-colour.webp
   baseURL: https://hq.advancednavigation.com.au/kinematica/api
   tags:
+  - GNSS
+  - Post-Processing
+  - Positioning
+  - Geospatial
+  tags_raw:
   - GNSS
   - Post Processing
   - Positioning
@@ -123,7 +136,6 @@ common:
   url: conformance/advancednavigation-conformance.yml
 - type: LLMsTxt
   url: llms/advancednavigation-llms.txt
-
 x-enrichment:
   date: '2026-09-09'
   status: enriched
