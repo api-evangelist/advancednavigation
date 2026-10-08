@@ -72,3 +72,30 @@ x-evidence:
   status: 200
 - url: https://www.advancednavigation.com/pricing/
   status: 404
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - hybrid
+  - subscription
+  units: []
+  plans:
+  - name: Free Trial
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Subscription
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Pay As You Go
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods: []
