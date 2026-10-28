@@ -1,4 +1,4 @@
-# Advancednavigation
+# Advanced Navigation
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,21 +64,111 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Advanced Navigation is an Australian navigation and robotics manufacturer (Sydney, NSW) building
-inertial navigation systems, IMU/AHRS, GNSS compasses, acoustic/USBL subsea positioning and
-underwater robotics. Its devices speak the proprietary binary Advanced Navigation Packet Protocol
-(ANPP), documented in per-product reference manuals and implemented by first-party C SDKs, a Python
-SDK on PyPI and ROS 1 / ROS 2 drivers.
+Advanced Navigation is an Australian navigation and robotics manufacturer (Sydney, NSW) building inertial navigation systems (INS), IMU/AHRS, GNSS compasses, acoustic/USBL subsea positioning and underwater robotics for air, land, sea and space — the Boreas FOG and Certus MEMS GNSS/INS families, Motus, GNSS Compass, Subsonus USBL, Subsonus Tag and the Hydrus micro-AUV, plus the Chimera laser velocity sensor and Air Data Unit aiding accessories. Its devices speak the proprietary binary Advanced Navigation Packet Protocol (ANPP), documented in per-product reference manuals and implemented by first-party C SDKs, a Python SDK on PyPI and ROS 1 / ROS 2 drivers. Its one public web API is the Kinematica API — an HTTP/JSON interface to the Kinematica cloud GNSS/INS post-processing (PPK) service, documented as a versioned PDF reference manual rather than a machine-readable specification.
 
-Its one public web API is the **Kinematica API** — an HTTP/JSON interface to the Kinematica cloud
-GNSS/INS post-processing (PPK) service at `https://hq.advancednavigation.com.au/kinematica/api`. It is
-documented as a versioned 45-page PDF reference manual (API v1.2, document v1.6, 06/01/2026) rather
-than a machine-readable specification: no OpenAPI, AsyncAPI, GraphQL, MCP server or agent card was
-found on any host. The artifacts in this repository were read out of that manual and confirmed against
-live probes.
+**Areas:** Company · Navigation · Inertial Navigation · GNSS · Positioning · Robotics · Defense · Subsea · Geospatial · Post-Processing · Hardware
 
-- Website: https://www.advancednavigation.com/
-- Documentation: https://www.advancednavigation.com/documentation/
-- Kinematica API reference: https://www.advancednavigation.com/accessories/gnss-ins-post-processing/kinematica/api-reference-manual/
-- GitHub: https://github.com/advanced-navigation
-- Secondary-market listing this profile was seeded from: https://equityzen.com/company/advancednavigation
+## Advanced Navigation on APIs.io
+
+Everything profiled for Advanced Navigation is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/advancednavigation/](https://apis.io/providers/advancednavigation/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Kinematica API](https://apis.io/apis/advancednavigation/advancednavigation-kinematica/) — HTTP/JSON API for Advanced Navigation's Kinematica cloud GNSS/INS post-processing kinematic (PPK) service. Eleven documented calls let a customer…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [advancednavigation-kinematica](https://apis.io/servers/advancednavigation/advancednavigation-kinematica/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Advancednavigation Authentication](https://apis.io/security/advancednavigation/advancednavigation-authentication/)
+- [Advancednavigation Domain Security](https://apis.io/security/advancednavigation/advancednavigation-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Advancednavigation Plans Pricing](https://apis.io/plans/advancednavigation/advancednavigation-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Advancednavigation Rate Limits](https://apis.io/rate-limits/advancednavigation/advancednavigation-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.advancednavigation.com/)
+- [Documentation](https://www.advancednavigation.com/documentation/)
+- [API reference](https://www.advancednavigation.com/accessories/gnss-ins-post-processing/kinematica/api-reference-manual/)
+- [Pricing](https://hq.advancednavigation.com.au/kinematica/home.jsp)
+- [Sign up](https://hq.advancednavigation.com.au/kinematica/home.jsp)
+- [Support](https://help.advancednavigation.com/s/)
+- [Blog](https://www.advancednavigation.com/news/)
+- [Terms of service](https://www.advancednavigation.com/terms/)
+- [Privacy policy](https://www.advancednavigation.com/privacy-policy/)
+- [GitHub](https://github.com/advanced-navigation)
+
+## API Evangelist rating
+
+**Kin Score 42.3** — developing · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 47.4 |
+| Developer ergonomics | 50.0 |
+| Access clarity | 76.3 |
+
+**Agent readiness 7.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/advancednavigation/](https://apis.io/providers/advancednavigation/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Advanced Navigation: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/advancednavigation/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
