@@ -90,20 +90,27 @@ Model Context Protocol servers that expose the API to agents.
 
 Authentication, trust centre, and vulnerability disclosure.
 
-- [Advancednavigation Authentication](https://apis.io/security/advancednavigation/advancednavigation-authentication/)
-- [Advancednavigation Domain Security](https://apis.io/security/advancednavigation/advancednavigation-domain-security/)
+- [Advanced Navigation Authentication](https://apis.io/security/advancednavigation/advancednavigation-authentication/)
+- [Advanced Navigation Domain Security](https://apis.io/security/advancednavigation/advancednavigation-domain-security/)
 
-#### Plans and pricing (1)
+#### Plans and pricing (2)
 
 Published plans, tiers and prices.
 
-- [Advancednavigation Plans Pricing](https://apis.io/plans/advancednavigation/advancednavigation-plans-pricing/)
+- [Advanced Navigation Plans Pricing](https://apis.io/plans/advancednavigation/advancednavigation-plans-pricing/)
+- [Advanced Navigation Price Estimates](https://apis.io/plans/advancednavigation/advancednavigation-price-estimates/)
 
 #### Rate limits (1)
 
 Published request limits.
 
-- [Advancednavigation Rate Limits](https://apis.io/rate-limits/advancednavigation/advancednavigation-rate-limits/)
+- [Advanced Navigation Rate Limits](https://apis.io/rate-limits/advancednavigation/advancednavigation-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Advanced Navigation Finops](https://apis.io/finops/advancednavigation/advancednavigation-finops/)
 
 ## Where to find this API
 
@@ -122,18 +129,18 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 42.3** — developing · rubric 0.25.0 · scored 2026-10-23
+**Kin Score 42.1** — developing · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
 | Discoverability | 73.2 |
 | Contract quality | 0.0 |
 | Contract governance | 18.2 |
-| Operational transparency | 47.4 |
+| Operational transparency | 45.2 |
 | Developer ergonomics | 50.0 |
-| Access clarity | 76.3 |
+| Access clarity | 80.9 |
 
-**Agent readiness 7.9** — agent-aware
+**Agent readiness 7.7** — agent-aware
 
 | Agent-readiness dimension | Result |
 |---|---|
@@ -158,8 +165,12 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Agentic Commerce | — |
 | Pagination Ratio | na |
 | Operation Distinctiveness | na |
+| MCP Tool Quality | na |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | na |
 
-**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+**Regulatory alignment 18.6** — Horizontal (data, software, accessibility, platform)
 
 The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/advancednavigation/](https://apis.io/providers/advancednavigation/).
 
